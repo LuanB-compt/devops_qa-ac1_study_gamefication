@@ -22,23 +22,26 @@ public class Aluno {
     private Plano plano;
 
     public Aluno(String nome) {
-        throw new UnsupportedOperationException("não implementado");
+        this.nome = nome;
+        this.cursosConcluidos = 0;
+        this.moedas = 0;
+        this.plano = Plano.BASICO;
     }
 
     public String getNome() {
-        throw new UnsupportedOperationException("não implementado");
+        return nome;
     }
 
     public int getCursosConcluidos() {
-        throw new UnsupportedOperationException("não implementado");
+        return cursosConcluidos;
     }
 
     public int getMoedas() {
-        throw new UnsupportedOperationException("não implementado");
+        return moedas;
     }
 
     public Plano getPlano() {
-        throw new UnsupportedOperationException("não implementado");
+        return plano;
     }
 
     /**
@@ -46,7 +49,7 @@ public class Aluno {
      * então o Aluno ganha um curso".
      */
     public void ganharCurso() {
-        throw new UnsupportedOperationException("não implementado");
+        cursosConcluidos++;
     }
 
     /**
@@ -54,16 +57,26 @@ public class Aluno {
      * de 7, quando finalizar o curso, então esse aluno ganhará mais 3 cursos".
      */
     public void concluirCurso(Curso curso, double media) {
-        throw new UnsupportedOperationException("não implementado");
+        cursosConcluidos++;
+        if (media > 7) {
+            cursosConcluidos += 3;
+        }
     }
 
     @Override
     public boolean equals(Object obj) {
-        throw new UnsupportedOperationException("não implementado");
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Aluno other = (Aluno) obj;
+        return nome == null ? other.nome == null : nome.equals(other.nome);
     }
 
     @Override
     public int hashCode() {
-        throw new UnsupportedOperationException("não implementado");
+        return nome == null ? 0 : nome.hashCode();
     }
 }

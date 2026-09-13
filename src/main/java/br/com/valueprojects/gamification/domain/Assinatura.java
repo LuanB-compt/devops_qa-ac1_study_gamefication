@@ -13,19 +13,21 @@ public class Assinatura {
     private boolean pagamentoRealizado;
 
     public Assinatura(Aluno aluno) {
-        throw new UnsupportedOperationException("não implementado");
+        this.aluno = aluno;
+        this.ativa = true;
+        this.pagamentoRealizado = false;
     }
 
     public Aluno getAluno() {
-        throw new UnsupportedOperationException("não implementado");
+        return aluno;
     }
 
     public boolean isAtiva() {
-        throw new UnsupportedOperationException("não implementado");
+        return ativa;
     }
 
     public void registrarPagamento() {
-        throw new UnsupportedOperationException("não implementado");
+        pagamentoRealizado = true;
     }
 
     /**
@@ -33,6 +35,9 @@ public class Assinatura {
      * e a assinatura estava ativa, ela é cancelada.
      */
     public void encerrarMes() {
-        throw new UnsupportedOperationException("não implementado");
+        if (ativa && !pagamentoRealizado) {
+            ativa = false;
+        }
+        pagamentoRealizado = false;
     }
 }

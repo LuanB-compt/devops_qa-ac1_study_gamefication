@@ -11,10 +11,10 @@ public class Curso {
     private String nome;
 
     public Curso(String nome) {
-        throw new UnsupportedOperationException("não implementado");
+        this.nome = nome;
     }
 
     public String getNome() {
-        throw new UnsupportedOperationException("não implementado");
+        return nome;
     }
 }

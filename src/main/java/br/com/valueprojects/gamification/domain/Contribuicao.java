@@ -12,14 +12,15 @@ public class Contribuicao {
     private double peso;
 
     public Contribuicao(Aluno aluno, double peso) {
-        throw new UnsupportedOperationException("não implementado");
+        this.aluno = aluno;
+        this.peso = peso;
     }
 
     public Aluno getAluno() {
-        throw new UnsupportedOperationException("não implementado");
+        return aluno;
     }
 
     public double getPeso() {
-        throw new UnsupportedOperationException("não implementado");
+        return peso;
     }
 }
