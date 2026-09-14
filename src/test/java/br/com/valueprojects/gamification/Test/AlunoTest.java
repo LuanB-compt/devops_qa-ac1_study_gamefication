@@ -1,6 +1,9 @@
 package br.com.valueprojects.gamification.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -54,5 +57,51 @@ public class AlunoTest {
 
         // Then (apenas o curso concluído é contabilizado, sem bônus)
         assertEquals(cursosAntes + 1, aluno.getCursosConcluidos());
+    }
+
+    // BLUE - cobertura: estado inicial de um aluno recém-criado (nome, moedas
+    // e plano padrão), usado como base pelos cenários 2 (assinatura/plano) e
+    // futura conversão de moedas.
+    @Test
+    public void deveIniciarComNomeMoedasZeroEPlanoBasico() {
+        // Given / When
+        Aluno aluno = new Aluno("Nina");
+
+        // Then
+        assertEquals("Nina", aluno.getNome());
+        assertEquals(0, aluno.getMoedas());
+        assertEquals(Aluno.Plano.BASICO, aluno.getPlano());
+    }
+
+    // BLUE - cobertura: equals/hashCode usados pela apuração de vencedores em
+    // MesDeContribuicoes (comparação de alunos pelo nome).
+    @Test
+    public void deveSerIgualAOutroAlunoComMesmoNome() {
+        Aluno aluno1 = new Aluno("Otavio");
+        Aluno aluno2 = new Aluno("Otavio");
+
+        assertTrue(aluno1.equals(aluno1));
+        assertTrue(aluno1.equals(aluno2));
+        assertEquals(aluno1.hashCode(), aluno2.hashCode());
+    }
+
+    @Test
+    public void naoDeveSerIgualANuloOuAOutroTipoOuANomeDiferente() {
+        Aluno aluno = new Aluno("Paula");
+
+        assertFalse(aluno.equals(null));
+        assertFalse(aluno.equals("Paula"));
+        assertNotEquals(aluno, new Aluno("Quenia"));
+    }
+
+    @Test
+    public void deveTratarNomeNuloAoCompararEHashear() {
+        Aluno alunoSemNome1 = new Aluno(null);
+        Aluno alunoSemNome2 = new Aluno(null);
+        Aluno alunoComNome = new Aluno("Rafael");
+
+        assertTrue(alunoSemNome1.equals(alunoSemNome2));
+        assertFalse(alunoSemNome1.equals(alunoComNome));
+        assertEquals(0, alunoSemNome1.hashCode());
     }
 }

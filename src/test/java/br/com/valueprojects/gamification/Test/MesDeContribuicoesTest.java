@@ -1,6 +1,7 @@
 package br.com.valueprojects.gamification.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -66,5 +67,36 @@ public class MesDeContribuicoesTest {
         // Then
         assertEquals(alunoA, vencedor);
         assertEquals(cursosAntes + 1, alunoA.getCursosConcluidos());
+    }
+
+    // Cenário 4: Dado um jogo acontecendo e um Participante válido, quando
+    // notar dois ou mais resultados deste participante, então o segundo
+    // resultado deve ser ignorado (registro consecutivo do mesmo aluno).
+    @Test
+    public void deveIgnorarSegundaContribuicaoConsecutivaDoMesmoAluno() {
+        // Given
+        MesDeContribuicoes mes = new MesDeContribuicoes("Setembro/2026");
+        Aluno alunoA = new Aluno("Nara");
+
+        // When (Nara contribui duas vezes seguidas)
+        mes.registrar(new Contribuicao(alunoA, 1));
+        mes.registrar(new Contribuicao(alunoA, 1));
+
+        // Then (a segunda contribuição consecutiva é ignorada)
+        assertEquals(1, mes.getContribuicoes().size());
+        assertEquals(alunoA, mes.getContribuicoes().get(0).getAluno());
+        assertEquals(1, mes.getContribuicoes().get(0).getPeso());
+    }
+
+    // BLUE - cobertura: mês sem nenhuma contribuição não tem vencedor e o
+    // encerramento não deve conceder curso a ninguém.
+    @Test
+    public void naoDeveHaverVencedorNemGanhoDeCursoQuandoMesNaoTemContribuicoes() {
+        // Given
+        MesDeContribuicoes mes = new MesDeContribuicoes("Setembro/2026");
+
+        // When / Then
+        assertNull(mes.apurarVencedor());
+        assertNull(mes.encerrar());
     }
 }

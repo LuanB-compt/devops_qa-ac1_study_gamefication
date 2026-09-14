@@ -1,5 +1,6 @@
 package br.com.valueprojects.gamification.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -42,5 +43,33 @@ public class AssinaturaTest {
 
         // Then
         assertTrue(assinatura.isAtiva());
+    }
+
+    // BLUE - cobertura: getAluno() expõe o aluno vinculado à assinatura.
+    @Test
+    public void deveExporOAlunoVinculadoAAssinatura() {
+        // Given
+        Aluno aluno = new Aluno("Fernanda");
+        Assinatura assinatura = new Assinatura(aluno);
+
+        // Then
+        assertEquals(aluno, assinatura.getAluno());
+    }
+
+    // BLUE - cobertura: encerrar o mês de uma assinatura já cancelada não deve
+    // ter efeito (mantém inativa, sem lançar exceção).
+    @Test
+    public void deveManterAssinaturaJaCanceladaAoEncerrarNovamenteOMes() {
+        // Given
+        Aluno aluno = new Aluno("Gustavo");
+        Assinatura assinatura = new Assinatura(aluno);
+        assinatura.encerrarMes();
+        assertFalse(assinatura.isAtiva());
+
+        // When
+        assinatura.encerrarMes();
+
+        // Then
+        assertFalse(assinatura.isAtiva());
     }
 }
