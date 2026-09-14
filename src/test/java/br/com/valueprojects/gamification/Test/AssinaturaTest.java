@@ -72,4 +72,17 @@ public class AssinaturaTest {
         // Then
         assertFalse(assinatura.isAtiva());
     }
+
+    // BLUE - cobertura: construtor de reidratação usado pelo service para
+    // reconstruir o estado já persistido de uma assinatura.
+    @Test
+    public void deveReidratarAssinaturaComEstadoJaPersistido() {
+        // Given / When
+        Aluno aluno = new Aluno("Helio");
+        Assinatura assinatura = new Assinatura(aluno, false, true);
+
+        // Then
+        assertEquals(aluno, assinatura.getAluno());
+        assertFalse(assinatura.isAtiva());
+    }
 }

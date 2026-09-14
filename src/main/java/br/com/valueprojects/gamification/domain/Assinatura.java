@@ -13,9 +13,18 @@ public class Assinatura {
     private boolean pagamentoRealizado;
 
     public Assinatura(Aluno aluno) {
+        this(aluno, true, false);
+    }
+
+    /**
+     * Construtor usado pela camada de persistência (service)
+     * para reconstruir uma Assinatura a partir do estado já salvo em banco,
+     * sem alterar as regras de negócio dos métodos públicos.
+     */
+    public Assinatura(Aluno aluno, boolean ativa, boolean pagamentoRealizado) {
         this.aluno = aluno;
-        this.ativa = true;
-        this.pagamentoRealizado = false;
+        this.ativa = ativa;
+        this.pagamentoRealizado = pagamentoRealizado;
     }
 
     public Aluno getAluno() {
