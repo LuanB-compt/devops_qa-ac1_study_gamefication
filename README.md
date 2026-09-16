@@ -1,6 +1,6 @@
 # Gamification — AC1 DevOps & QA
 
-Projeto da disciplina **DevOps & QA** (Engenharia de Computação), desenvolvido em ciclo **TDD (RED → GREEN → BLUE)** a partir de cenários BDD, com API REST em Spring Boot, persistência em PostgreSQL e orquestração via Docker Compose.
+Projeto da disciplina **DevOps & QA** (Engenharia de Computação), desenvolvido em ciclo **TDD (RED → GREEN → BLUE)** a partir de cenários BDD, com API REST em Spring Boot, persistência em PostgreSQL, um frontend Vue para validação manual dos endpoints e orquestração via Docker Compose.
 
 **Integrante do grupo:**
 
@@ -71,6 +71,8 @@ Cenários elaborados, derivados da US #1.
 - **H2** — banco em memória, perfil de apoio didático/local
 - **PostgreSQL 16** — banco relacional, perfil padrão de execução
 - **Docker / Docker Compose** — containerização da aplicação e orquestração com PostgreSQL e pgAdmin
+- **Vue 3 + Vite** — frontend simples, sem lógica de negócio própria, usado apenas para validar manualmente os endpoints REST via navegador
+- **Node.js / NPM** — build e execução do frontend (local ou containerizado via Docker)
 
 ## Arquitetura
 
@@ -82,6 +84,16 @@ Pacotes em `br.com.valueprojects.gamification`:
 - `service` — orquestra repositório + regras de `domain`
 - `dto` — objetos de requisição/resposta da API
 - `controller` — endpoints REST
+
+### Frontend (`frontend/`)
+
+SPA Vue 3 + Vite simples, criada apenas para testar e validar manualmente as funcionalidades expostas pela API, com base nos cenários de `context/bdd.md`. Não contém lógica de negócio — cada aba consome diretamente um grupo de endpoints da API:
+
+- `src/api.js` — funções de acesso à API (`BASE_URL = '/api'`, repassado ao backend via proxy do Vite)
+- `src/components/AlunosTab.vue` — lista alunos cadastrados
+- `src/components/MesesTab.vue` — registra contribuições, consulta ranking e encerra o mês (apuração do vencedor)
+- `src/components/AssinaturasTab.vue` — cria assinatura, registra pagamento e encerra/cancela assinatura
+- `src/components/CursosTab.vue` — registra conclusão de curso pelo aluno
 
 ### Endpoints principais
 
@@ -131,6 +143,19 @@ mvn spring-boot:run -Dspring-boot.run.profiles=postgres
 
 Variáveis de ambiente aceitas (com valores padrão): `DB_HOST` (`localhost`), `DB_PORT` (`5432`), `DB_NAME` (`gamificationdb`), `DB_USER` (`postgres`), `DB_PASSWORD` (`postgres`).
 
+### Frontend (sem Docker)
+
+Com o backend já rodando em `http://localhost:8080` (Opção A ou B acima), em outro terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+- Frontend: `http://localhost:5173`
+- As chamadas para `/api` são redirecionadas pelo proxy do Vite (`vite.config.js`) para `http://localhost:8080`
+
 ## Como rodar via Docker Compose
 
 Na raiz do projeto:
@@ -139,11 +164,19 @@ Na raiz do projeto:
 docker compose up --build
 ```
 
-Isso sobe 3 serviços:
+Isso sobe 4 serviços:
 
 - **app** — API Spring Boot em `http://localhost:8080` (perfil `postgres` ativo)
 - **postgres** — PostgreSQL 16 em `localhost:5432`
 - **pgadmin** — pgAdmin em `http://localhost:5050`
+- **frontend** — SPA Vue em `http://localhost:5173`, rodando com Node/NPM (`npm run dev` dentro do container), usada para validar manualmente os endpoints da API
+
+### Frontend (Docker Compose)
+
+- URL: `http://localhost:5173`
+- Container criado a partir de `frontend/Dockerfile` (imagem `node:20-alpine`, `npm ci` + `npm run dev -- --host 0.0.0.0`)
+- As chamadas para `/api` são redirecionadas pelo proxy do Vite para o serviço `app` (via variável de ambiente `VITE_API_PROXY_TARGET=http://app:8080`, configurada no `docker-compose.yml`)
+- O código-fonte de `frontend/` é montado como volume no container, então alterações locais recarregam automaticamente (hot reload do Vite)
 
 ### Dados do PostgreSQL (Docker Compose)
 
@@ -194,3 +227,7 @@ Prints coletados durante o ciclo TDD e a validação dos bancos H2/PostgreSQL.
 
 ![Console H2](docs/db_h2.png)
 ![PostgreSQL via pgAdmin](docs/db_postgres.png)
+
+### Frontend validando a API
+
+![Frontend Vue](docs/frontend.png)
