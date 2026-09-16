@@ -1,0 +1,226 @@
+:root {
+  --cor-fundo: #f5f6f8;
+  --cor-texto: #1f2430;
+  --cor-texto-suave: #5b6472;
+  --cor-borda: #dfe3e8;
+  --cor-primaria: #3454d1;
+  --cor-primaria-hover: #2a44ab;
+  --cor-sucesso: #1b8a5a;
+  --cor-sucesso-fundo: #e6f6ee;
+  --cor-erro: #c0392b;
+  --cor-erro-fundo: #fdecea;
+  --cor-card: #ffffff;
+  --raio: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+#app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+header.topo {
+  margin-bottom: 24px;
+}
+
+header.topo h1 {
+  font-size: 1.5rem;
+  margin: 0 0 4px;
+}
+
+header.topo p {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+nav.abas {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--cor-borda);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+nav.abas button {
+  background: none;
+  border: none;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: var(--cor-texto-suave);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+nav.abas button:hover {
+  color: var(--cor-texto);
+}
+
+nav.abas button.ativa {
+  color: var(--cor-primaria);
+  border-bottom-color: var(--cor-primaria);
+  font-weight: 600;
+}
+
+.card {
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.card h3 {
+  font-size: 0.95rem;
+  color: var(--cor-texto-suave);
+  margin-bottom: 8px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+form.linha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.campo label {
+  font-size: 0.8rem;
+  color: var(--cor-texto-suave);
+}
+
+.campo input {
+  padding: 8px 10px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  min-width: 160px;
+}
+
+button.acao {
+  background: var(--cor-primaria);
+  color: #fff;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+button.acao:hover {
+  background: var(--cor-primaria-hover);
+}
+
+button.acao:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button.secundaria {
+  background: #fff;
+  color: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
+}
+
+button.secundaria:hover {
+  background: #eef1fd;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+th {
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge.basico {
+  background: #eef1fd;
+  color: var(--cor-primaria);
+}
+
+.badge.premium {
+  background: #fff4d6;
+  color: #8a6a00;
+}
+
+.badge.ativa {
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso);
+}
+
+.badge.inativa {
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro);
+}
+
+.mensagem {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+}
+
+.mensagem.sucesso {
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso);
+}
+
+.mensagem.erro {
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro);
+}
+
+.vazio {
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+  padding: 12px 0;
+}
