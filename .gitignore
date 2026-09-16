@@ -25,3 +25,4 @@ replay_pid*
 
 # Project Stuff
 target/
+node_modules/
