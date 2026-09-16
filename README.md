@@ -170,3 +170,27 @@ Para encerrar e remover os volumes:
 ```bash
 docker compose down -v
 ```
+
+## Evidências
+
+Prints coletados durante o ciclo TDD e a validação dos bancos H2/PostgreSQL.
+
+### RED — testes de domínio falhando (camada domain)
+
+![Terminal RED](docs/terminal_red.png)
+
+### GREEN — testes passando (camada domain)
+
+![Terminal GREEN](docs/terminal_green.png)
+![Relatório JaCoCo GREEN](docs/jacoco_report_green.png)
+
+### BLUE — refino e cobertura (camada domain)
+
+![Terminal BLUE](docs/terminal_blue.png)
+![Relatório JaCoCo BLUE 1](docs/jacoco_report1_blue.png)
+![Relatório JaCoCo BLUE 2](docs/jacoco_report2_blue.png)
+
+### Bancos H2 e PostgreSQL
+
+![Console H2](docs/db_h2.png)
+![PostgreSQL via pgAdmin](docs/db_postgres.png)
